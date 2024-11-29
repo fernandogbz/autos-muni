@@ -20,7 +20,7 @@ class AutoForm:
     self.ventana.config(bg='blue')
     # instanciar la clase Rol
     self.auto = Auto()
-    self.id = 0
+    self.patente = ""
     # llamamos al metodo formulario
     self.formulario()
     self.cargar()
@@ -110,16 +110,16 @@ class AutoForm:
       mb.showerror("Error", "Todos los campos son requeridos")
     else:
       # si el id es igual a 0, significa que guarda uno nuevo
-      if self.id == 0:
+      if self.patente == "":
         # invocamos el método que permite guardar en la base de datos
         self.auto.add(self.inputPatente.get(), self.inputMarca.get(), self.inputModelo.get())
       else:
           # si el id es distinto de 0, modifica el registro
-        self.auto.editar(self.id, self.inputPatente.get())
+        self.auto.editar(self.patente, self.inputMarca.get(), self.inputModelo.get())
         # invocamos el método que permite guardar en la base de datos
-        mb.showinfo("Mensaje", "Información del auto guardada correctamente")
-        self.limpiar()
-        self.cargar()
+      mb.showinfo("Mensaje", "Información del auto guardada correctamente")
+      self.limpiar()
+      self.cargar()
 
   def seleccionar(self, event):
     self.limpiar()
@@ -136,12 +136,12 @@ class AutoForm:
         
   def eliminar(self):
     # validamos si hay registro seleccionado
-    if self.id!= 0:
+    if self.patente!= "":
       # preguntamos si queremos eliminar el Rol
-      pregunta = mb.askyesno("Eliminar", "¿Desea eliminar el Rol?")
+      pregunta = mb.askyesno("Eliminar", "¿Desea eliminar el Automovil?")
       # verificamos la respuesta
       if pregunta:
-        self.auto.eliminar(self.id)
+        self.auto.eliminar(self.patente)
         self.cargar()
         self.limpiar()
 
@@ -150,7 +150,7 @@ class AutoForm:
     self.inputPatente.delete(0, tk.END)
     self.inputMarca.delete(0, tk.END)
     self.inputModelo.delete(0, tk.END)
-    self.id = 0
+    self.patente = ""
     
   def cargar(self):
     # eliminar los datos que tenga la tabla
