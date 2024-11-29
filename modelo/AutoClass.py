@@ -35,17 +35,17 @@ class Auto:
     # retornamos la variable con los datos
     return patentes
   
-  def eliminar (self, id):
+  def eliminar (self, patente):
     query = 'DELETE FROM automovil WHERE patente = %s'
-    value = id,
+    value = patente,
     db = ConnectionDatabase()
     db.cursor.execute(query, value)
     db.connection.commit()
     db.cursor.close()
     
   def editar (self, patente, marca, modelo):
-    query = 'UPDATE automovil SET patente = %s AND SET marca = %s AND SET modelo = %s  WHERE patente = %s'
-    values = patente, marca, modelo
+    query = 'UPDATE automovil SET marca = %s, modelo = %s  WHERE patente = %s'
+    values = (marca, modelo, patente)
     db = ConnectionDatabase()
     db.cursor.execute(query, values)
     db.connection.commit()
